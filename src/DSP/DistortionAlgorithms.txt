@@ -1,0 +1,34 @@
+-- Mod fun
+    output = mod(input * gain + 1, 2) - 1;
+
+-- Hard Clip
+    output = input * gain;
+    if (abs(output) > 0.99) {
+        output = 0.99 / abs(output);
+    }
+
+-- Arctan chugginess
+    output = arctan(sin(input));
+-- Solid Saturator
+    0 < a < 1
+    output = a + (x - a) / 1 + ((x - a) / (1 - a))^2
+-- Dynamics Compression for dummies
+
+auto threshold = -20.0f
+auto ratio = 4.0f
+auto attack = 1.0f;
+auto release = 100.0f;
+
+auto thrlin = Decibels::decibelsToGain(threshold);
+
+auto cteAT = std::exp(-2.0f * float_Pi * 1000.0f / attack / sampleRate);
+auto cteRL = std::exp(-2.0f * float_Pi * 1000.0f / release / sampleRate);
+
+auto s1 = 0.0f;
+
+for (auto i = 0; i < numSamples; ++i) {
+    auto sideInput = std::abs(sample[i]);
+    auto cte = (sideInput >= s1 ? cteAT : cteRL);
+    auto env = sideInput + cte * (s1 - sideInput);
+    s1 = env;
+}
