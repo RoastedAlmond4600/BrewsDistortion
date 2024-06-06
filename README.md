@@ -5,7 +5,7 @@ A simple distortion plugin with three distinct modes: Hard, Soft, and Saturate.
 
 
 ## Build and Compile with Git Submodules
-If JUCE is not installed on your system and you don't want to mess around with the CMakeLists.txt, clone this repo with the `git clone --recurse-submodule https://thisrepo.git` command
+If JUCE is not installed on your system and you don't want to mess around with the CMakeLists.txt, clone this repo with the `git clone --recurse-submodule https://github.com/RoastedAlmond4600/BrewsDistortion.git` command
 and then run
 ```
 cmake -B cmake-build
