@@ -8,7 +8,7 @@ A simple distortion plugin with three distinct modes: Hard, Soft, and Saturate.
 If JUCE is not installed on your system and you don't want to mess around with the CMakeLists.txt, clone this repo with the `git clone --recurse-submodule https://thisrepo.git` command
 and then run
 ```
-$: cmake -B cmake-build
+cmake -B cmake-build
 ```
 This will create a build directory cmake-build, which will allow you to properly build it using
 ```
