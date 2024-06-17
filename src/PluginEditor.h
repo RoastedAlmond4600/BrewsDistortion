@@ -38,5 +38,6 @@ private:
     ComboBoxAttachment modelAttachment {processorRef.apvts, ParameterID::model.getParamID(), modelBox};
     BrewsLookAndFeel brewsLNF;
     void updateToggleState(juce::Button& button, juce::ComboBox& box, int index);
+    std::atomic<int> currentModelId;
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 };

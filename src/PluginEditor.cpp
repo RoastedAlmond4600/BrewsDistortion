@@ -15,16 +15,16 @@ BrewsDistortionAudioProcessorEditor::BrewsDistortionAudioProcessorEditor (BrewsD
     addAndMakeVisible(mixKnob);
     auto* parameter = processorRef.apvts.getParameter("model");
     modelBox.addItemList(parameter->getAllValueStrings(), 1);
-   
+    modelBox.addListener(this); 
 
-    //TODO: Get current model and toggle corresponding button if NOT already toggled.
-    // Perhaps if we made the radiogroup a listener, and let the combo box broadcast 
-    //Get the value of the model
     std::atomic<float>* rawModelParam = processorRef.apvts.getRawParameterValue(ParameterID::model.getParamID());
     int rawModelParamValue = static_cast<int>(rawModelParam->load());
     if (rawModelParamValue == 0) updateToggleState(hardButton, modelBox, 0);
     if (rawModelParamValue == 1) updateToggleState(softButton, modelBox, 1);
     if (rawModelParamValue == 2) updateToggleState(saturateButton, modelBox, 2);
+
+    //TODO: Get current model and toggle corresponding button if NOT already toggled.
+    // Perhaps if we made the radiogroup a listener, and let the combo box broadcast 
     //Button Lambdas.
     auto modelLambda = [this](int index, juce::Button& button) {
         updateToggleState(button, modelBox, index);
@@ -53,6 +53,7 @@ BrewsDistortionAudioProcessorEditor::BrewsDistortionAudioProcessorEditor (BrewsD
 
 BrewsDistortionAudioProcessorEditor::~BrewsDistortionAudioProcessorEditor()
 {
+    modelBox.removeListener(this);
 }
 
 //==============================================================================
@@ -106,5 +107,12 @@ void BrewsDistortionAudioProcessorEditor::updateToggleState(juce::Button& button
 }
 
 void BrewsDistortionAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) {
-    
+    //Get the value of the model
+    if (comboBoxThatHasChanged == &modelBox) {
+        currentModelId.store(comboBoxThatHasChanged->getSelectedId());
+        if (currentModelId.load() == 1) hardButton.triggerClick();
+        if (currentModelId.load() == 2) softButton.triggerClick();
+        if (currentModelId.load() == 3) saturateButton.triggerClick();
+        std::printf("%d\n", currentModelId.load());
+    }
 }
