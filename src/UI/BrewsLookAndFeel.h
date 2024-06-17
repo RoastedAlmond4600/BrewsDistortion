@@ -1,6 +1,5 @@
 #pragma once
 #include <JuceHeader.h>
-#include "res/BinaryData.h"
 class BrewsLookAndFeel : public juce::LookAndFeel_V4 {
 public:
     BrewsLookAndFeel();
@@ -9,6 +8,7 @@ public:
     juce::Slider::SliderLayout getSliderLayout(Slider& slider) override;
     juce::Font getLabelFont(Label& label) override;
     void drawButtonBackground(Graphics& g, juce::Button& button, const Colour& backgroundColour, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonDown) override;
+    void drawTextEditorOutline(juce::Graphics& g, int width, int height, juce::TextEditor& editor) override;
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BrewsLookAndFeel)
 };

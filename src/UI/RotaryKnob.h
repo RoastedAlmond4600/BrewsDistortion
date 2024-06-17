@@ -1,6 +1,5 @@
 #pragma once
 #include <JuceHeader.h>
-#include "./res/BinaryData.h"
 class RotaryKnob : public juce::Component {
 public:
     RotaryKnob();

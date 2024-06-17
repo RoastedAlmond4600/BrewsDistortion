@@ -28,7 +28,6 @@ target_sources(BrewsDist
 	src/DSP/Distortion.cpp
 	src/UI/RotaryKnob.cpp
 	src/UI/BrewsLookAndFeel.cpp
-	src/UI/res/BinaryData.cpp
 	)
 target_compile_definitions(BrewsDist
     PUBLIC
@@ -36,10 +35,16 @@ target_compile_definitions(BrewsDist
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_plugin` call
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
         JUCE_VST3_CAN_REPLACE_VST2=0)
-# juce_add_binary_data(BrewsDistData SOURCES)
+ juce_add_binary_data(BrewsDistData SOURCES 
+                      res/Banner.png
+                      res/CoverImage.png
+                      res/Raleway-VariableFont_wght.ttf
+                                             
+)
 target_link_libraries(BrewsDist
     PRIVATE
         # AudioPluginData           # If we'd created a binary data target, we'd link to it here
+        BrewsDistData
         juce::juce_audio_utils
 	juce::juce_dsp
     PUBLIC

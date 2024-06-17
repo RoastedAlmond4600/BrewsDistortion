@@ -4,14 +4,15 @@ BrewsLookAndFeel::BrewsLookAndFeel() {
     setColour(juce::ResizableWindow::backgroundColourId, juce::Colour(255, 255, 255));
     setColour(juce::Slider::backgroundColourId, juce::Colour(255, 0, 0));
     setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(100, 100, 100));
-    setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(255, 255, 255));
+    setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(0, 0, 0));
     setColour(juce::Slider::thumbColourId, juce::Colour(255, 0, 0));
     setColour(juce::Slider::textBoxBackgroundColourId, juce::Colour(160, 0, 0));
+    setColour(juce::Slider::textBoxOutlineColourId, juce::Colour(255, 0, 0));
     setColour(juce::Label::textColourId, juce::Colour(0, 0, 0));
-
+    
+    //Button Colours
     setColour(juce::TextButton::buttonColourId, juce::Colour(255, 255, 255));
     setColour(juce::TextButton::buttonOnColourId, juce::Colour(255, 255, 255));
-    //setColour(juce::ComboBox::outlineColourId, juce::Colour(0, 0, 0));
     setColour(juce::TextButton::textColourOffId, juce::Colour(0, 0, 0));
     setColour(juce::TextButton::textColourOnId, juce::Colour(255, 0, 0));
 }
@@ -40,24 +41,15 @@ void BrewsLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int width, in
 
     auto center = bounds.getCentre();
     auto strokeType = juce::PathStrokeType(lineW, juce::PathStrokeType::beveled, juce::PathStrokeType::butt);
-    juce::Path knobBackgroundPath;
-    juce::Path knobForegroundPath;
-    auto foregroundProportion = bounds.getWidth() * 0.95f;
-    knobBackgroundPath.addEllipse(juce::Rectangle<float>(bounds.getWidth(), bounds.getWidth()).withCentre(center));
-    knobForegroundPath.addEllipse(juce::Rectangle<float>(foregroundProportion, foregroundProportion).withCentre(center));
-    if (slider.isEnabled()) {
-        juce::Path backgroundArc;
-	g.setOpacity(0.1f);
-        backgroundArc.addCentredArc(center.x, center.y, arcRadius, arcRadius, 0.0f, rotaryStartAngle, rotaryEndAngle, true);
 
-        g.setColour(outlineColor);
-        //g.strokePath(backgroundArc, strokeType);
-        g.setColour(juce::Colours::black);
-	// Draw Knob Background
-	g.fillPath(knobBackgroundPath);
-    }
-    juce::Point<float> thumbPoint(center.x + dialRadius * std::cos(arg),
-	                          center.y + dialRadius * std::sin(arg));
+    // Draw Knob Background
+    juce::Path knobBackgroundPath;
+    knobBackgroundPath.addEllipse(juce::Rectangle<float>(bounds.getWidth(), bounds.getWidth()).withCentre(center));
+    g.setColour(fillColour);
+    g.fillPath(knobBackgroundPath);
+
+    //Draw Dial
+    juce::Point<float> thumbPoint(center.x + dialRadius * std::cos(arg), center.y + dialRadius * std::sin(arg));
     g.setColour(dialColour);
     //Center nub
     g.fillEllipse(juce::Rectangle<float>(dialW, dialW).withCentre(center));
@@ -127,4 +119,7 @@ void BrewsLookAndFeel::drawButtonBackground (Graphics& g,
         g.setColour (button.findColour (ComboBox::outlineColourId));
         g.drawRoundedRectangle (bounds, cornerSize, 1.0f);
     }
+}
+
+void BrewsLookAndFeel::drawTextEditorOutline(juce::Graphics& g, int width, int height, juce::TextEditor& editor) {
 }

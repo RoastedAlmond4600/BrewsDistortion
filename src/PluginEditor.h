@@ -4,7 +4,8 @@
 #include "UI/RotaryKnob.h"
 #include "UI/BrewsLookAndFeel.h"
 //==============================================================================
-class BrewsDistortionAudioProcessorEditor final : public juce::AudioProcessorEditor
+class BrewsDistortionAudioProcessorEditor final : public juce::AudioProcessorEditor,
+                                                  public juce::ComboBox::Listener
 {
 public:
     explicit BrewsDistortionAudioProcessorEditor (BrewsDistortionAudioProcessor&);
@@ -37,4 +38,5 @@ private:
     ComboBoxAttachment modelAttachment {processorRef.apvts, ParameterID::model.getParamID(), modelBox};
     BrewsLookAndFeel brewsLNF;
     void updateToggleState(juce::Button& button, juce::ComboBox& box, int index);
+    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 };
